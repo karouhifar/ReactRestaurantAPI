@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import { Card, CardDeck } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import { BarLoader } from 'react-spinners';
@@ -23,9 +24,8 @@ export default function Restaurant(props) {
                 }
             });
     }, [props.id]);
-
-    if (!loading) {
-        if (restaurant) {
+    if (restaurant) {
+        if (!loading) {
             return (
                 <div>
                     <Card bg="secondary" text="white">
@@ -96,17 +96,32 @@ export default function Restaurant(props) {
             );
         } else {
             return (
-                <div>
-                    <h3>Restaurant {props.id}</h3>
-                    <p>Not Found...</p>
+                <div className="loading">
+                    <h2>Loading</h2>
+                    <BarLoader size={150} color="orange" loading />
                 </div>
             );
         }
     } else {
         return (
-            <div className="loading">
-                <h2>Loading</h2>
-                <BarLoader size={150} color="orange" loading />
+            <div>
+                <Card>
+                    <Card.Header>
+                        <Card.Title>
+                            <h3>Restaurant ID: {props.id}</h3>
+                            <p>
+                                Not Found... <code> -404</code>
+                            </p>
+                        </Card.Title>
+                    </Card.Header>
+                    <Card.Footer>
+                        <small className="text-muted">
+                            <p>
+                                <Link to="/">Return Home</Link>
+                            </p>
+                        </small>
+                    </Card.Footer>
+                </Card>
             </div>
         );
     }

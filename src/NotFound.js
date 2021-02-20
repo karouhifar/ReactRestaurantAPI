@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Card, CardColumns } from 'react-bootstrap';
 
-export default function NotFound() {
+export default function NotFound(props) {
     const myStyleMain = {
         fontSize: '2rem',
         fontFamily: 'Cursive',
