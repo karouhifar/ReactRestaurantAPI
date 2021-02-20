@@ -1,13 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.table-hover tr:hover{ cursor:pointer;}
+
+body {
+  background-image: url(./pexels-creative-vix-370984.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+
+}
+.Navbar {
+    height: 8vh;
+    font-weight: 700;
+    font-size: 1rem;
+}
+.carousel-caption {
+  font-weight: 900;
+  font-style: oblique;
+}
+.loading {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-style: italic;
+  background-color: gray;
+  padding: 10px;
+
+}
+.loading h2 {
+font-size: 3rem;
+color: white;
+padding: 10px;
+font-family: 'Lobster', cursive;
 }
