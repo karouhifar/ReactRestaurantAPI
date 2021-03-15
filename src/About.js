@@ -4,7 +4,7 @@ import image3 from './kamyabThree.jpg';
 import { Card, Carousel, Image } from 'react-bootstrap';
 import { BarLoader } from 'react-spinners';
 export default function About(props) {
-    if (image1 && image2 && image3)
+    if (image1 && image2 && image3) {
         return (
             <div>
                 <Card bg="secondary" text="white">
@@ -92,11 +92,12 @@ export default function About(props) {
                 <br />
             </div>
         );
-    else
+    } else {
         return (
             <div className="loading">
                 <h2>Loading</h2>
                 <BarLoader size={150} color="orange" loading />
             </div>
         );
+    }
 }

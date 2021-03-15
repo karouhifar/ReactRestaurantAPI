@@ -12,7 +12,8 @@ export default function Restaurant(props) {
     useEffect(() => {
         setLoading(true);
         fetch(
-            `https://desolate-sea-28067.herokuapp.com/api/restaurants/${props.id}`
+            `https://desolate-sea-28067.herokuapp.com/api/restaurants/${props.id}`,
+            { method: 'GET' }
         )
             .then((response) => response.json())
             .then((restaurant) => {
@@ -24,8 +25,8 @@ export default function Restaurant(props) {
                 }
             });
     }, [props.id]);
-    if (restaurant) {
-        if (!loading) {
+    if (!loading) {
+        if (restaurant) {
             return (
                 <div>
                     <Card bg="secondary" text="white">
@@ -96,32 +97,32 @@ export default function Restaurant(props) {
             );
         } else {
             return (
-                <div className="loading">
-                    <h2>Loading</h2>
-                    <BarLoader size={150} color="orange" loading />
+                <div>
+                    <Card>
+                        <Card.Header>
+                            <Card.Title>
+                                <h3>Restaurant ID: {props.id}</h3>
+                                <p>
+                                    Not Found... <code> -404</code>
+                                </p>
+                            </Card.Title>
+                        </Card.Header>
+                        <Card.Footer>
+                            <small className="text-muted">
+                                <p>
+                                    <Link to="/">Return Home</Link>
+                                </p>
+                            </small>
+                        </Card.Footer>
+                    </Card>
                 </div>
             );
         }
     } else {
         return (
-            <div>
-                <Card>
-                    <Card.Header>
-                        <Card.Title>
-                            <h3>Restaurant ID: {props.id}</h3>
-                            <p>
-                                Not Found... <code> -404</code>
-                            </p>
-                        </Card.Title>
-                    </Card.Header>
-                    <Card.Footer>
-                        <small className="text-muted">
-                            <p>
-                                <Link to="/">Return Home</Link>
-                            </p>
-                        </small>
-                    </Card.Footer>
-                </Card>
+            <div className="loading">
+                <h2>Loading</h2>
+                <BarLoader size={150} color="orange" loading />
             </div>
         );
     }
