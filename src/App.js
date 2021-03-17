@@ -99,7 +99,7 @@ function App() {
                                 />
 
                                 <Route
-                                    
+                                    exact
                                     path="/Restaurants"
                                     render={(props) => (
                                         <Restaurants
