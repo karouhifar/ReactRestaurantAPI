@@ -18,7 +18,7 @@ export default function Restaurant(props) {
     useEffect(() => {
         setLoading(true);
         fetch(
-            `https://desolate-sea-28067.herokuapp.com/api/restaurants/${props.id}`,
+            `https://gentle-mesa-25260.herokuapp.com/api/restaurants/${props.id}`,
             { method: 'GET' }
         )
             .then((response) => response.json())
