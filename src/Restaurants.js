@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import queryString from 'query-string';
 import { Card, Table, Pagination } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 import { BarLoader } from 'react-spinners';
+import { gsap } from 'gsap';
 function Restaurants(props) {
     const [restaurants, setRestaurants] = useState(null);
     const [page, setPage] = useState(1);
@@ -13,14 +14,15 @@ function Restaurants(props) {
         fontFamily: 'Cursive',
         padding: '10px',
     };
+
     useEffect(() => {
         let url = '';
         if (props.query) {
             const parsed = queryString.parse(props.query);
             console.log(parsed.borough);
-            url = `https://desolate-sea-28067.herokuapp.com/api/restaurants?page=${page}&perPage=${perPage}&borough=${parsed.borough}`;
+            url = `https://gentle-mesa-25260.herokuapp.com/api/restaurants?page=${page}&perPage=${perPage}&borough=${parsed.borough}`;
         } else
-            url = `https://desolate-sea-28067.herokuapp.com/api/restaurants?page=${page}&perPage=${perPage}`;
+            url = `https://gentle-mesa-25260.herokuapp.com/api/restaurants?page=${page}&perPage=${perPage}`;
 
         fetch(url)
             .then((response) => response.json())
@@ -42,6 +44,31 @@ function Restaurants(props) {
         setPage((page) => page + 1);
     }
 
+    const SASF = useRef([]);
+    SASF.current = [];
+    const SA = useCallback(
+        (el) => {
+            if (restaurants && el && !SASF.current.includes(el)) {
+                SASF.current.push(el);
+            }
+        },
+        [restaurants]
+    );
+
+    useEffect(() => {
+        if (SASF || restaurants) {
+            const tl = new gsap.timeline();
+            tl.from(SASF.current, {
+                duration: 1,
+                autoAlpha: 0,
+                ease: 'power2.out',
+                stagger: 1,
+                y: -500,
+                delay: '1',
+            });
+        }
+    }, [restaurants]);
+
     if (restaurants) {
         if (restaurants.length) {
             return (
@@ -62,42 +89,49 @@ function Restaurants(props) {
                                 borough
                             </p>
                             <br />
-                            <Table
-                                responsive
-                                striped
-                                bordered
-                                hover
-                                variant="dark"
-                            >
-                                <thead>
-                                    <tr>
-                                        <th>name</th>
-                                        <th>address</th>
-                                        <th>borough</th>
-                                        <th>cuisine</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {restaurants.map((restaurant, i) => (
-                                        <tr
-                                            key={restaurant._id}
-                                            onClick={() => {
-                                                history.push(
-                                                    `/restaurant/${restaurant._id}`
-                                                );
-                                            }}
-                                        >
-                                            <td>{restaurant.name}</td>
-                                            <td>
-                                                {restaurant.address.building}{' '}
-                                                {restaurant.address.street}
-                                            </td>
-                                            <td>{restaurant.borough}</td>
-                                            <td>{restaurant.cuisine}</td>
+                            <div>
+                                <Table
+                                    responsive
+                                    striped
+                                    bordered
+                                    hover
+                                    variant="dark"
+                                >
+                                    <thead>
+                                        <tr>
+                                            <th>name</th>
+                                            <th>address</th>
+                                            <th>borough</th>
+                                            <th>cuisine</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
+                                    </thead>
+
+                                    <tbody>
+                                        {restaurants.map((restaurant, i) => (
+                                            <tr
+                                                ref={SA}
+                                                key={restaurant._id}
+                                                onClick={() => {
+                                                    history.push(
+                                                        `/restaurant/${restaurant._id}`
+                                                    );
+                                                }}
+                                            >
+                                                <td>{restaurant.name}</td>
+                                                <td>
+                                                    {
+                                                        restaurant.address
+                                                            .building
+                                                    }{' '}
+                                                    {restaurant.address.street}
+                                                </td>
+                                                <td>{restaurant.borough}</td>
+                                                <td>{restaurant.cuisine}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </Table>
+                            </div>
                             <Pagination>
                                 <Pagination.Prev onClick={previousPage} />
                                 <Pagination.Item>{page}</Pagination.Item>
