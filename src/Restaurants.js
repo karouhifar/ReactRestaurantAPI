@@ -20,9 +20,9 @@ function Restaurants(props) {
         if (props.query) {
             const parsed = queryString.parse(props.query);
             console.log(parsed.borough);
-            url = `https://desolate-sea-28067.herokuapp.com/api/restaurants?page=${page}&perPage=${perPage}&borough=${parsed.borough}`;
+            url = `https://gentle-mesa-25260.herokuapp.com/api/restaurants?page=${page}&perPage=${perPage}&borough=${parsed.borough}`;
         } else
-            url = `https://desolate-sea-28067.herokuapp.com/api/restaurants?page=${page}&perPage=${perPage}`;
+            url = `https://gentle-mesa-25260.herokuapp.com/api/restaurants?page=${page}&perPage=${perPage}`;
 
         fetch(url)
             .then((response) => response.json())
