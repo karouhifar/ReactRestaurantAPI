@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import {
+    MapContainer,
+    TileLayer,
+    Marker,
+    LayersControl,
+    Tooltip,
+} from 'react-leaflet';
 import { Card, CardDeck } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
@@ -47,16 +53,36 @@ export default function Restaurant(props) {
                                     restaurant.address.coord[1],
                                     restaurant.address.coord[0],
                                 ]}
-                                zoom={13}
-                                scrollWheelZoom={false}
+                                zoom={45}
+                                scrollWheelZoom={true}
                             >
-                                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                                <Marker
-                                    position={[
-                                        restaurant.address.coord[1],
-                                        restaurant.address.coord[0],
-                                    ]}
-                                ></Marker>
+                                <LayersControl position="topright">
+                                    <LayersControl.BaseLayer
+                                        checked
+                                        name="Mapnik (Default)"
+                                    >
+                                        <TileLayer
+                                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        />
+                                    </LayersControl.BaseLayer>
+                                    <LayersControl.BaseLayer name="OpenStreetMap.BlackAndWhite">
+                                        <TileLayer
+                                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                            url="https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png"
+                                        />
+                                    </LayersControl.BaseLayer>
+                                    <Marker
+                                        position={[
+                                            restaurant.address.coord[1],
+                                            restaurant.address.coord[0],
+                                        ]}
+                                    >
+                                        <Tooltip opacity={1} permanent>
+                                            <b>{restaurant.name}</b>
+                                        </Tooltip>
+                                    </Marker>
+                                </LayersControl>
                             </MapContainer>
                         </Card.Body>
                     </Card>
