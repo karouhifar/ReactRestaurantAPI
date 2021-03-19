@@ -56,7 +56,7 @@ function Restaurants(props) {
     );
 
     useEffect(() => {
-        if (SASF && restaurants) {
+        if (SASF || restaurants) {
             const tl = new gsap.timeline();
             tl.from(SASF.current, {
                 duration: 1,
