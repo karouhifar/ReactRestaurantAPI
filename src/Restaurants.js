@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import { Card, Table, Pagination } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 import { BarLoader } from 'react-spinners';
-import { gsap, Power3 } from 'gsap';
+import { gsap } from 'gsap';
 function Restaurants(props) {
     const [restaurants, setRestaurants] = useState(null);
     const [page, setPage] = useState(1);
@@ -64,6 +64,7 @@ function Restaurants(props) {
                 ease: 'power2.out',
                 stagger: 1,
                 y: -500,
+                delay: '1',
             });
         }
     }, [restaurants]);
